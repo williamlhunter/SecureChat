@@ -14,7 +14,6 @@ if len(sys.argv) == 1:
     print("Binding server to port 5555")
     socket = context.socket(zmq.REP)
     socket.bind("tcp://*:5555")
-
 elif len(sys.argv) == 2:
     isServer = False
     print("Connecting to server at: " + sys.argv[1])
@@ -23,19 +22,14 @@ elif len(sys.argv) == 2:
 
 if isServer:
     while True:
-        try:
-            message = socket.recv()
-        except:
-            error()
-
-        print("them: %s" % message)
-        socket.send(b"World")
+        message = input("> ")
+        socket.send(message)
 
 else:
-    for request in range(10):
-        print("Sending request %s …" % request)
-        socket.send(b"Hello")
-
-        #  Get the reply.
+    while True:
         message = socket.recv()
-        print("Received reply %s [ %s ]" % (request, message))
+        print("them: %s" % message)
+
+
+
+
