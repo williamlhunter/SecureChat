@@ -12,23 +12,24 @@ context = zmq.Context()
 if len(sys.argv) == 1:
     isServer = True
     print("Binding server to port 5555")
-    socket = context.socket(zmq.REP)
+    socket = context.socket(zmq.PUB)
     socket.bind("tcp://*:5555")
-elif len(sys.argv) == 2:
+#elif len(sys.argv) == 2:
+else:
     isServer = False
     print("Connecting to server at: " + sys.argv[1])
-    socket = context.socket(zmq.REQ)
+    socket = context.socket(zmq.SUB)
     socket.connect("tcp://" + sys.argv[1] + ":5555")
 
 if isServer:
     while True:
         message = input("> ")
-        socket.send(message)
+        socket.send(message.encode())
 
 else:
     while True:
-        message = socket.recv()
-        print("them: %s" % message)
+        message = socket.recv().decode()
+        print("them> %s" % message)
 
 
 
