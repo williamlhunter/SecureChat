@@ -20,6 +20,7 @@ else:
     print("Connecting to server at: " + sys.argv[1])
     socket = context.socket(zmq.SUB)
     socket.connect("tcp://" + sys.argv[1] + ":5555")
+    socket.setsockopt_string(zmq.SUBSCRIBE, "")
 
 if isServer:
     while True:
@@ -29,7 +30,7 @@ if isServer:
 else:
     while True:
         message = socket.recv().decode()
-        print("them> %s" % message)
+        print("them> ", message)
 
 
 
