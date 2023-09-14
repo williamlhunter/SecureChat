@@ -1,30 +1,36 @@
 import zmq
-import threading
+from threading import Thread
 import sys
 
 isServer = False
 
-def error():
-    print("Error")
-    quit()
+def sub_routine(socket):
+    while True:
+        message = socket.recv().decode()
+        print("them> ", message)
 
 context = zmq.Context()
 pub = context.socket(zmq.PUB)
 sub = context.socket(zmq.SUB)
+
+#Are we running as a server?
 if len(sys.argv) == 1:
-    isServer = True
-    print("binding server to ports 5555 and 5556")
     pub.bind("tcp://*:5555")
     sub.bind("tcp://*:5556")
-    sub.setsockopt_string(zmq.SUBSCRIBE, "")
-#elif len(sys.argv) == 2:
 else:
-    isServer = False
-    print("Connecting to server at: " + sys.argv[1])
     pub.connect("tcp://" + sys.argv[1] + ":5556")
     sub.connect("tcp://" + sys.argv[1] + ":5555")
-    sub.setsockopt_string(zmq.SUBSCRIBE, "")
 
+sub.setsockopt_string(zmq.SUBSCRIBE, "")
+
+subber = Thread(target=sub_routine, args=[sub])
+subber.start()
+
+while True:
+    message = input("> ")
+    pub.send(message.encode())
+
+"""
 if isServer:
     while True:
         message = input("> ")
@@ -38,7 +44,6 @@ else:
         print("them> ", message)
         message = input("> ")
         pub.send(message.encode())
-
-
+"""
 
 
