@@ -29,21 +29,3 @@ subber.start()
 while True:
     message = input("> ")
     pub.send(message.encode())
-
-"""
-if isServer:
-    while True:
-        message = input("> ")
-        pub.send(message.encode())
-        message = sub.recv().decode()
-        print("them> ", message)
-
-else:
-    while True:
-        message = sub.recv().decode()
-        print("them> ", message)
-        message = input("> ")
-        pub.send(message.encode())
-"""
-
-
