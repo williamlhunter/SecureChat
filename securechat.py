@@ -15,6 +15,7 @@ def sub_routine(socket, crypto):
         print("them> ", message)
 
 context = zmq.Context()
+#pub/sub is a disgusting hack
 pub = context.socket(zmq.PUB)
 sub = context.socket(zmq.SUB)
 
