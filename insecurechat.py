@@ -2,14 +2,13 @@ import zmq
 from threading import Thread
 import sys
 
-isServer = False
-
 def sub_routine(socket):
     while True:
         message = socket.recv().decode()
         print("them> ", message)
 
 context = zmq.Context()
+#pub/sub is a disgusting hack
 pub = context.socket(zmq.PUB)
 sub = context.socket(zmq.SUB)
 
