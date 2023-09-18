@@ -1,9 +1,8 @@
 # TODO
 
-* Setup basic chat functionality
-    * Then allowing client and server to chat with eachother
-* Add support for commands
 * Implement encryption
+    * ECDH with the x25519 curve
+* Add support for commands
 
 ## Stretch goals
 
