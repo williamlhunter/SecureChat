@@ -47,7 +47,6 @@ publicKey = privateKey.public_key().public_bytes_raw()
 pub.send(publicKey)
 theirPublicKey = x25519.X25519PublicKey.from_public_bytes(sub.recv())
 sharedKey = privateKey.exchange(theirPublicKey)
-print(len(sharedKey))
 keyIv = HKDF(
     algorithm=hashes.SHA256(),
     length=48,
