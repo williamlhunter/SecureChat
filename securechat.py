@@ -10,7 +10,6 @@ import sys
 def sub_routine(socket, crypto):
     while True:
         cipherText = socket.recv()
-        print("recieved ciphertext: ", cipherText)
         message = crypto.update(cipherText).decode()
         print("them> ", message)
 
@@ -72,5 +71,4 @@ while True:
     for i in range(16 - len(message) % 16):
         message += '\0'
     cipherText = encryptor.update(message.encode())
-    print("outgoing ciphertext: ", cipherText)
     pub.send(cipherText)
